@@ -11,17 +11,16 @@ FASTLED_USING_NAMESPACE
 
 //#define MOUTH_DATA_PIN      9
 //#define SCLERA_DATA_PIN     8
-#define PUPIL_DATA_PIN      7
-#define BUTTON_PIN          6
+#define PUPIL_DATA_PIN      3
+#define BUTTON_PIN          4
 #define LED_TYPE    WS2811
 #define COLOR_ORDER GRB
-
 
 
 /*******************************
 *   POTENTIOMETER SETTINGS
 *******************************/
-#define POT_JITTER_LIMIT 15    
+#define POT_JITTER_LIMIT 5    
 #define POT_AVERAGING 8
 // #define POT_MAX 750
 #define POT_MAX 1023
@@ -72,7 +71,7 @@ const uint8_t HALF_BYTE = FULL_BYTE/2;
 *******************************/
 
 //Root Hue Pin
-const int rootHueInPin = A3;
+const int rootHueInPin = A0;
 int rootHuePinAvg = 0;
   //
 const uint8_t mRootHueMin = 0;
@@ -82,7 +81,7 @@ bool mRootHueDirty = false;
 
 
 //Root Hue Pin
-const int secondTonesInPin = A0;
+const int secondTonesInPin = A3;
 int secondTonesPinAvg = 0;
   //
 const uint8_t mSecondToneMin = 20;
@@ -90,11 +89,11 @@ const uint8_t mSecondToneMax = ONE_THIRD_BYTE;
 uint8_t mSecondTone = mSecondToneMin;
 bool mSecondToneDirty = false;
 
-const int modInPin1 = A1;
+const int modInPin1 = A2;
 int modPin1Avg = 0;
 int gModPin1 = 0;
 
-const int modInPin2 = A2;
+const int modInPin2 = A1;
 int modPin2Avg = 0;
 int gModPin2 = 0;
 
@@ -129,7 +128,7 @@ CRGB HSV_to_RGB(uint8_t hue, uint8_t saturation, uint8_t value);
 /*******************************
 *       PALETTE
 *******************************/
-const uint8_t PALETTE_SIZE = 96;
+const uint8_t PALETTE_SIZE = 127;
 CRGB mainTones [3];
 CRGB mainPalette [PALETTE_SIZE];
 bool mainPaletteDirty [PALETTE_SIZE];
@@ -163,6 +162,9 @@ void zigZag(int runTime, CRGB* leds, bool reversed);
 void gradientRotate(int runTime, CRGB* leds, bool reversed);
 void randomConfetti(int runTime, CRGB* leds, bool reversed);
 void flappy(int runTime, CRGB* leds, bool reversed);
+
+//void smileyDrawCoordinates(uint8_t* coords, uint8_t count, CRGB* leds);
+//void smiley(int runTime, CRGB* leds, bool reversed);
 
 
 
@@ -315,7 +317,7 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 
 
 
-
+//
 // /*************************
 // *   SMILEY
 // **************************/
@@ -325,39 +327,39 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 //   6,0,  6,1,    5,0,  5,1
 // };
 // const uint8_t smileyEyesOpenCoordinatesCount = ARRAY_SIZE(smileyEyesOpenCoordinates);
-
-
+//
+//
 // const uint8_t smileyEyesBlinkCoordinates[] = { 
 //   1,1,  2,0,  
 //   6,1,  5,0, 
 // };
 // const uint8_t smileyEyesBlinkCoordinatesCount = ARRAY_SIZE(smileyEyesBlinkCoordinates);
-
-
+//
+//
 // const uint8_t smileyMouthCoordinates[] = {  
 //    10,1, 11,1, 12,1, 13,1, 
 // };
 // const uint8_t smileyMouthCoordinatesCount = ARRAY_SIZE(smileyMouthCoordinates);
-
+//
 // const uint8_t smileyMouthClosedCoordinates[] = {  
 //   9,1, 14,1
 // };
 // const uint8_t smileyMouthClosedCoordinatesCount = ARRAY_SIZE(smileyMouthClosedCoordinates);
-
+//
 // const uint8_t smileyMouthOpenCoordinates[] = {  
 //    11,0, 12,0, 
 // };
 // const uint8_t smileyMouthOpenCoordinatesCount = ARRAY_SIZE(smileyMouthOpenCoordinates);
-
-
+//
+//
 // int smileyNextBlinkTime = 0;
 // int8_t smileyBlinkTimer = -1;
 // int smileyNextBlurb = 0;
 // int8_t smileyBlurbTimer = -1;
 // uint8_t smileyLongPauseRolls = 0;
-
-
-// void smileyDrawCoordinates(uint8_t* coords, uint8_t count, CRGB* leds) {
+//
+//
+// void smileyDrawCoordinates(const uint8_t* coords, const uint8_t count, CRGB* leds) {
 //   for(uint8_t c = 0; c < count; c += 2) {
 //     uint8_t spoke = coords[c];
 //     uint8_t ring = coords[c+1];
@@ -365,7 +367,7 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 //     leds[targetIndex] = getPaletteColorNum(gMainPaletteOffset);
 //   }
 // }
-
+//
 // void smiley(int runTime, CRGB* leds, bool reversed) {
 //   if(runTime == -1) {
 //     smileyNextBlinkTime = 0;
@@ -374,7 +376,7 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 //     smileyBlurbTimer = -1;
 //     smileyLongPauseRolls = 8;
 //   }
-
+//
 //   if(runTime >= smileyNextBlinkTime) {
 //     smileyNextBlinkTime = runTime + 250 + random8(250);
 //     smileyBlinkTimer = 0;
@@ -391,15 +393,15 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 //     smileyNextBlurb = runTime + 5 + timeout;
 //     smileyBlurbTimer = 0;
 //   }
-
+//
 //   fadeOutToDarkness(leds, NUM_PUPIL_LEDS, 0, 50);
-
-
+//
+//
 //   smileyDrawCoordinates(smileyEyesBlinkCoordinates, smileyEyesBlinkCoordinatesCount, leds);
 //   if((smileyBlinkTimer == -1) == (reversed == false)) {
 //     smileyDrawCoordinates(smileyEyesOpenCoordinates, smileyEyesOpenCoordinatesCount, leds);
 //   }
-
+//
 //   smileyDrawCoordinates(smileyMouthCoordinates, smileyMouthCoordinatesCount, leds);
 //   if((smileyBlurbTimer != -1) == (reversed == false)) {
 //     smileyDrawCoordinates(smileyMouthOpenCoordinates, smileyMouthOpenCoordinatesCount, leds);
@@ -407,15 +409,15 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 //   else {
 //     smileyDrawCoordinates(smileyMouthClosedCoordinates, smileyMouthClosedCoordinatesCount, leds);
 //   }
-
-
+//
+//
 //   if(smileyBlinkTimer != -1) {
 //     smileyBlinkTimer++;
 //     if(smileyBlinkTimer > 20) {
 //       smileyBlinkTimer = -1;
 //     }
 //   }
-
+//
 //   if(smileyBlurbTimer != -1) {
 //     smileyBlurbTimer++;
 //     if(smileyBlurbTimer > 5) {
@@ -423,7 +425,7 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 //     }
 //   }
 // }
-
+//
 
 
 

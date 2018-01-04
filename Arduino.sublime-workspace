@@ -4,6 +4,490 @@
 		"selected_items":
 		[
 			[
+				"BRIG",
+				"OVERALL_BRIGHTNESS"
+			],
+			[
+				"max",
+				"max_uint8s"
+			],
+			[
+				"insert",
+				"insertAt"
+			],
+			[
+				"NUM",
+				"NUM_PATTERNS"
+			],
+			[
+				"NU",
+				"NUM_PATTERNS"
+			],
+			[
+				"gPa",
+				"gMainPaletteOffset"
+			],
+			[
+				"ran",
+				"randNum"
+			],
+			[
+				"gra",
+				"gradientRotate"
+			],
+			[
+				"flappyBi",
+				"flappyBirdsMax"
+			],
+			[
+				"flap",
+				"flappyBirdsRings"
+			],
+			[
+				"flapp",
+				"flappyBirdsRising"
+			],
+			[
+				"flappyBirds",
+				"flappyBirdsSpokes"
+			],
+			[
+				"time",
+				"timeout"
+			],
+			[
+				"smileyMout",
+				"smileyMouthCoordinatesCount"
+			],
+			[
+				"smile",
+				"smileyMouthCoordinatesCount"
+			],
+			[
+				"smileyEye",
+				"smileyEyesBlinkCoordinatesCount"
+			],
+			[
+				"smileyEy",
+				"smileyEyesBlinkCoordinatesCount"
+			],
+			[
+				"sm",
+				"smileyBlinkTimer"
+			],
+			[
+				"pol",
+				"polarToIndex"
+			],
+			[
+				"smi",
+				"smileyCoordinates"
+			],
+			[
+				"smil",
+				"smileyCoordinatesCount"
+			],
+			[
+				"buto",
+				"buttonHoldMinTime"
+			],
+			[
+				"fram",
+				"frameSkipPerFrame"
+			],
+			[
+				"tw",
+				"twoStep"
+			],
+			[
+				"gradientRo",
+				"gradientRotateOffset"
+			],
+			[
+				"gran",
+				"gradientOffset"
+			],
+			[
+				"mainP",
+				"mainPalette"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"one",
+				"oneThirdPaletteSize"
+			],
+			[
+				"colo",
+				"colorNum"
+			],
+			[
+				"gMod",
+				"gModPin2"
+			],
+			[
+				"gM",
+				"gModPin2"
+			],
+			[
+				"modPin1",
+				"modPin1Avg"
+			],
+			[
+				"modPin",
+				"modInPin1"
+			],
+			[
+				"PAL",
+				"PALETTE_SIZE"
+			],
+			[
+				"next",
+				"nextZigAntTime"
+			],
+			[
+				"nextZi",
+				"nextZigAntTime"
+			],
+			[
+				"zig",
+				"zigAntColorOffset"
+			],
+			[
+				"zi",
+				"zigAntPosition"
+			],
+			[
+				"nextZ",
+				"nextZigAntTime"
+			],
+			[
+				"zigAntM",
+				"zigAntMinTime"
+			],
+			[
+				"NUM_P",
+				"NUM_PATTERN_LAYERS"
+			],
+			[
+				"cho",
+				"choosableItemCount"
+			],
+			[
+				"collec",
+				"collectionSize"
+			],
+			[
+				"inse",
+				"insertionPoint"
+			],
+			[
+				"mPat",
+				"mPatternLayerFnIndex"
+			],
+			[
+				"choo",
+				"choosablePatternCount"
+			],
+			[
+				"chos",
+				"choosablePatterns"
+			],
+			[
+				"change",
+				"changeTime"
+			],
+			[
+				"mPatternTr",
+				"mPatternTransitionTimeTotal"
+			],
+			[
+				"buttonHe",
+				"mButtonHeld"
+			],
+			[
+				"net",
+				"nextPattern"
+			],
+			[
+				"butt",
+				"buttonPressed"
+			],
+			[
+				"button",
+				"buttonState"
+			],
+			[
+				"but",
+				"buttonNow"
+			],
+			[
+				"watch",
+				"watchButton"
+			],
+			[
+				"int",
+				"int8_t"
+			],
+			[
+				"mPatter",
+				"mPatternLayerReversed"
+			],
+			[
+				"spri",
+				"sprinklerCurrentSpoke"
+			],
+			[
+				"NUM_L",
+				"NUM_LAYERS"
+			],
+			[
+				"mB",
+				"mBeingPlayedWith"
+			],
+			[
+				"twea",
+				"tweakFound"
+			],
+			[
+				"ARR",
+				"ARRAY_SIZE"
+			],
+			[
+				"modIn",
+				"modInPin2"
+			],
+			[
+				"mod",
+				"modInPin1"
+			],
+			[
+				"secondTo",
+				"secondTonesInPin"
+			],
+			[
+				"roo",
+				"rootHueInPin"
+			],
+			[
+				"rootH",
+				"rootHueInPin"
+			],
+			[
+				"rot",
+				"rootHueInPin"
+			],
+			[
+				"second",
+				"secondTonesTweakAmount"
+			],
+			[
+				"secondTone",
+				"secondTonesTweakAmount"
+			],
+			[
+				"mCur",
+				"mCurrentPatternRunTimes"
+			],
+			[
+				"modP",
+				"modInPin1"
+			],
+			[
+				"NUMP",
+				"NUM_PATTERN_LAYERS"
+			],
+			[
+				"cur",
+				"mCurrentLayer"
+			],
+			[
+				"PA",
+				"PATTERN_CHANGE_EVERY_N_SECONDS"
+			],
+			[
+				"mT",
+				"mPatternTransitionTimePassed"
+			],
+			[
+				"FU",
+				"FULL_BYTE"
+			],
+			[
+				"mF",
+				"mFadeOutTargetPattern"
+			],
+			[
+				"mPattern",
+				"mPatternTransitionTimeTotal"
+			],
+			[
+				"SIZ",
+				"ARRAY_SIZE"
+			],
+			[
+				"mC",
+				"mCurentPatternMix"
+			],
+			[
+				"mCU",
+				"mCurrentPatternRunTimes"
+			],
+			[
+				"un",
+				"uint8_t"
+			],
+			[
+				"P",
+				"PALETTE_SIZE"
+			],
+			[
+				"PAT",
+				"PATTERN_LEDS"
+			],
+			[
+				"LED",
+				"LEDS_OUT"
+			],
+			[
+				"LE",
+				"LEDS_OUT"
+			],
+			[
+				"C",
+				"CRGB"
+			],
+			[
+				"or",
+				"orbitCometSpeeds"
+			],
+			[
+				"num",
+				"numComets"
+			],
+			[
+				"orbitCo",
+				"orbitCometLayers"
+			],
+			[
+				"col",
+				"colorOffsetPerLayer"
+			],
+			[
+				"fad",
+				"fadeOutToDarkness"
+			],
+			[
+				"O",
+				"ONE_THIRD_BYTE"
+			],
+			[
+				"outp",
+				"outputMax"
+			],
+			[
+				"out",
+				"outputMax"
+			],
+			[
+				"warp",
+				"warpCometColorOffsets"
+			],
+			[
+				"warpCom",
+				"warpCometColorOffsets"
+			],
+			[
+				"fade",
+				"fadeToBlackBy"
+			],
+			[
+				"warpCo",
+				"warpCometLayers"
+			],
+			[
+				"war",
+				"warpSpeed"
+			],
+			[
+				"base",
+				"baseHueDirty"
+			],
+			[
+				"main",
+				"mainPalette"
+			],
+			[
+				"orbit",
+				"orbitDirs"
+			],
+			[
+				"obr",
+				"orbitSpeeds"
+			],
+			[
+				"of",
+				"offsetPerLine"
+			],
+			[
+				"patt",
+				"pattVar1"
+			],
+			[
+				"co",
+				"col1"
+			],
+			[
+				"mix",
+				"mixColors"
+			],
+			[
+				"spo",
+				"spiralSpokeOffset"
+			],
+			[
+				"NUM_S",
+				"NUM_SPOKES"
+			],
+			[
+				"spir",
+				"spiralCount"
+			],
+			[
+				"spiralPo",
+				"spiralPos"
+			],
+			[
+				"spi",
+				"spiralCount"
+			],
+			[
+				"mSe",
+				"mSecondToneDirty"
+			],
+			[
+				"mRo",
+				"mRootHueDirty"
+			],
+			[
+				"secont",
+				"secondTonesInPin"
+			],
+			[
+				"satu",
+				"saturationInPin"
+			],
+			[
+				"seco",
+				"secondTonesPinAvg"
+			],
+			[
+				"sat",
+				"saturationInPin"
+			],
+			[
 				"sa",
 				"saturation"
 			],
@@ -12,20 +496,12 @@
 				"fullByte"
 			],
 			[
-				"one",
-				"oneThird"
-			],
-			[
 				"mRoot",
 				"mRootHueMax"
 			],
 			[
 				"mR",
 				"mRootHueMin"
-			],
-			[
-				"roo",
-				"rootHuePinAvg"
 			],
 			[
 				"rootHue",
@@ -38,482 +514,6 @@
 			[
 				"m",
 				"mBrightness"
-			],
-			[
-				"br",
-				"brightnessPinAvg"
-			],
-			[
-				"pin",
-				"pinValue"
-			],
-			[
-				"up",
-				"updateForPinAndTellWhenChanged"
-			],
-			[
-				"out",
-				"outputDirty"
-			],
-			[
-				"chek",
-				"checkMe"
-			],
-			[
-				"outpu",
-				"outputValue"
-			],
-			[
-				"pi",
-				"pinValue"
-			],
-			[
-				"POT",
-				"POT_JITTER_LIMIT"
-			],
-			[
-				"bri",
-				"brightnessLastVal"
-			],
-			[
-				"last",
-				"brightnessLastVal"
-			],
-			[
-				"root",
-				"rootColorLastVal"
-			],
-			[
-				"pa",
-				"padding"
-			],
-			[
-				"backg",
-				"background-position"
-			],
-			[
-				"pad",
-				"padding-right"
-			],
-			[
-				"margin-",
-				"margin-bottom"
-			],
-			[
-				"no",
-				"no-repeat"
-			],
-			[
-				"box",
-				"box-shadow"
-			],
-			[
-				"hair",
-				"hairType"
-			],
-			[
-				"co",
-				"color"
-			],
-			[
-				"min",
-				"min-height"
-			],
-			[
-				"mar",
-				"margin-left"
-			],
-			[
-				"inline",
-				"inline-block"
-			],
-			[
-				"font-s",
-				"font-size"
-			],
-			[
-				"cal",
-				"calculateColumns"
-			],
-			[
-				"ran",
-				"randWindNum"
-			],
-			[
-				"ra",
-				"randWindNum"
-			],
-			[
-				"wind",
-				"windDxt"
-			],
-			[
-				"an",
-				"animation-direction"
-			],
-			[
-				"dr",
-				"drawBubblesRequest"
-			],
-			[
-				"bub",
-				"bubbles"
-			],
-			[
-				"h",
-				"height"
-			],
-			[
-				"le",
-				"length"
-			],
-			[
-				"max",
-				"max-width"
-			],
-			[
-				"border-bo",
-				"border-bottom-style"
-			],
-			[
-				"border-co",
-				"border-color"
-			],
-			[
-				"y",
-				"yNow"
-			],
-			[
-				"M",
-				"MGMT"
-			],
-			[
-				"gr",
-				"group"
-			],
-			[
-				"group",
-				"groups"
-			],
-			[
-				"be",
-				"beginPath"
-			],
-			[
-				"unk",
-				"unknown_person"
-			],
-			[
-				"create",
-				"createElement"
-			],
-			[
-				"app",
-				"appStat"
-			],
-			[
-				"fi",
-				"fillStyle"
-			],
-			[
-				"o",
-				"opps"
-			],
-			[
-				"tra",
-				"transition-timing-function"
-			],
-			[
-				"tr",
-				"transition-duration"
-			],
-			[
-				"card",
-				"cardHeaderFont"
-			],
-			[
-				"creat",
-				"createElement"
-			],
-			[
-				"wid",
-				"width"
-			],
-			[
-				"App",
-				"ApplicantGUI"
-			],
-			[
-				"A",
-				"ApplicantGUI"
-			],
-			[
-				"v",
-				"vertical-align"
-			],
-			[
-				"car",
-				"cardsOfType"
-			],
-			[
-				"do",
-				"domNode"
-			],
-			[
-				"rot",
-				"rotation"
-			],
-			[
-				"back",
-				"background-color"
-			],
-			[
-				"in",
-				"inherit"
-			],
-			[
-				"sk",
-				"skewQuad"
-			],
-			[
-				"dx",
-				"dxPerFrame"
-			],
-			[
-				"size",
-				"sizeDots"
-			],
-			[
-				"dy",
-				"dying"
-			],
-			[
-				"r",
-				"random"
-			],
-			[
-				"cla",
-				"classList"
-			],
-			[
-				"wi",
-				"width"
-			],
-			[
-				"d",
-				"display"
-			],
-			[
-				"po",
-				"position"
-			],
-			[
-				"color",
-				"colorModeChooser"
-			],
-			[
-				"va",
-				"var"
-			],
-			[
-				"get",
-				"getNextColor"
-			],
-			[
-				"sat",
-				"saturationChange"
-			],
-			[
-				"hu",
-				"hueChange"
-			],
-			[
-				"spl",
-				"splatters"
-			],
-			[
-				"sp",
-				"splat"
-			],
-			[
-				"splatt",
-				"splatters"
-			],
-			[
-				"las",
-				"lastY"
-			],
-			[
-				"re",
-				"requestAnimationFrame"
-			],
-			[
-				"fil",
-				"fillRect"
-			],
-			[
-				"bu",
-				"bubble"
-			],
-			[
-				"dra",
-				"drawBubbles"
-			],
-			[
-				"x",
-				"xNow"
-			],
-			[
-				"draw",
-				"drawLine"
-			],
-			[
-				"cur",
-				"currentSize"
-			],
-			[
-				"nex",
-				"nextY"
-			],
-			[
-				"next",
-				"nextX"
-			],
-			[
-				"fa",
-				"fadeOut"
-			],
-			[
-				"time",
-				"timedOut"
-			],
-			[
-				"la",
-				"lastPoint"
-			],
-			[
-				"he",
-				"height"
-			],
-			[
-				"a",
-				"addMe"
-			],
-			[
-				"padd",
-				"padding"
-			],
-			[
-				"border-st",
-				"border-right-style"
-			],
-			[
-				"text-a",
-				"text-align"
-			],
-			[
-				"font-",
-				"font-size"
-			],
-			[
-				"ma",
-				"margin"
-			],
-			[
-				"di",
-				"display"
-			],
-			[
-				"rout",
-				"routeGraph"
-			],
-			[
-				"ste",
-				"stepsNode"
-			],
-			[
-				"step",
-				"stepByStep"
-			],
-			[
-				"enu",
-				"enumDecoder"
-			],
-			[
-				"ca",
-				"canvas"
-			],
-			[
-				"op",
-				"options"
-			],
-			[
-				"un",
-				"undefined"
-			],
-			[
-				"n",
-				"nextNode"
-			],
-			[
-				"pat",
-				"paths"
-			],
-			[
-				"star",
-				"startNode"
-			],
-			[
-				"not",
-				"notBackwards"
-			],
-			[
-				"sta",
-				"startNode"
-			],
-			[
-				"ch",
-				"choices"
-			],
-			[
-				"find",
-				"findFastestRoute"
-			],
-			[
-				"of",
-				"offset"
-			],
-			[
-				"Ro",
-				"RouteGraph"
-			],
-			[
-				"ndoe",
-				"nodeIsUseful"
-			],
-			[
-				"check",
-				"checkMe"
-			],
-			[
-				"nod",
-				"nextNodePromises"
-			],
-			[
-				"pro",
-				"promiseNode"
-			],
-			[
-				"tmp",
-				"tmpUseful"
-			],
-			[
-				"res",
-				"resolve"
-			],
-			[
-				"route",
-				"routeGraph"
 			]
 		]
 	},
@@ -523,16 +523,7 @@
 			"file": "FirstTest/DemoReel100/DemoReel100.ino",
 			"settings":
 			{
-				"buffer_size": 7030,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/seph/Documents/Arduino/libraries/FastLED-master/FastLED.h",
-			"settings":
-			{
-				"buffer_size": 30700,
+				"buffer_size": 37143,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -546,7 +537,7 @@
 	"command_palette":
 	{
 		"height": 209.0,
-		"last_filter": "insta",
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -584,14 +575,22 @@
 	[
 		"/Users/seph/Code/Arduino",
 		"/Users/seph/Code/Arduino/BlinkyBox",
+		"/Users/seph/Code/Arduino/Cross",
 		"/Users/seph/Code/Arduino/FirstTest",
-		"/Users/seph/Code/Arduino/FirstTest/DemoReel100"
+		"/Users/seph/Code/Arduino/FirstTest/DemoReel100",
+		"/Users/seph/Code/Arduino/libraries"
 	],
 	"file_history":
 	[
+		"/Users/seph/Code/Web/SephReed.github.io/Writing/edward_jones.txt",
+		"/Users/seph/Documents/Arduino/libraries/FastLED-master/lib8tion.h",
+		"/Users/seph/Documents/Arduino/libraries/FastLED-master/pixeltypes.h",
+		"/Users/seph/Documents/Arduino/libraries/FastLED-master/examples/DemoReel100/DemoReel100.ino",
+		"/Users/seph/Documents/Arduino/libraries/FastLED-master/controller.h",
 		"/Users/seph/Documents/Arduino/libraries/FastLED-master/FastLED.h",
-		"/Users/seph/Documents/Arduino/libraries/FastLED-master/led_sysdefs.h",
+		"/Users/seph/Library/Arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/math.h",
 		"/applications/Arduino.app/Contents/Java/hardware/arduino/avr/cores/arduino/Arduino.h",
+		"/Users/seph/Documents/Arduino/libraries/FastLED-master/led_sysdefs.h",
 		"/Users/seph/Code/Web/SephReed.github.io/DaFT_2018/proposal.html",
 		"/Users/seph/Code/Web/SephReed.github.io/Writing/divergent_overlap.html",
 		"/Users/seph/Code/Web/SephReed.github.io/portfolio/index.html",
@@ -710,13 +709,7 @@
 		"/Users/seph/Code/Web/SephReed.github.io/PINE/needles/modal.html",
 		"/Users/seph/Code/Web/SephReed.github.io/PINE/needles/hotkeys.html",
 		"/Users/seph/Code/Web/SephReed.github.io/PINE/legacy/hotkeysOld.html",
-		"/Users/seph/Code/Web/SephReed.github.io/PINE/needles/showHide.html",
-		"/Users/seph/Code/Web/SephReed.github.io/PINE/noPine/vanilla_PINE_Styles.js",
-		"/Users/seph/Code/Web/SephReed.github.io/PINE/needles/fileChooser.html",
-		"/Users/seph/Code/Web/SephReed.github.io/PINE/tests/test_spawner.html",
-		"/Users/seph/Code/Web/SephReed.github.io/PINE/legacy/PINE_Needles_3.0.js",
-		"/Users/seph/Code/Web/SephReed.github.io/PINE/PINE_Includes.js",
-		"/Users/seph/Code/Web/SephReed.github.io/CryptoChallenges/CryptoTools.js"
+		"/Users/seph/Code/Web/SephReed.github.io/PINE/needles/showHide.html"
 	],
 	"find":
 	{
@@ -742,6 +735,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"NUM_LEDS",
+			"LEDS_OUT",
+			"int ",
+			"mixColor",
+			"modPin1Last",
+			"ARRAY_SI",
+			"WARP",
+			"button1",
 			"crgb",
 			"s69",
 			"project_and",
@@ -861,15 +862,7 @@
 			"debug",
 			"SyncProm",
 			"DrawCanv",
-			"chipHeight",
-			"chipWidth",
-			"baseline",
-			"resolved",
-			"El.",
-			"class.",
-			"FLAT",
-			"Pal.",
-			"world"
+			"chipHeight"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -877,6 +870,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"NUM_PUPIL_LEDS",
+			"PUPIL_LEDS_OUT",
+			"double ",
 			"topbar",
 			"S",
 			"quad",
@@ -1001,10 +997,7 @@
 			"benefactor",
 			"templates",
 			"save",
-			"input",
-			".ID",
-			"MidiInterval",
-			"MidiToInterval"
+			"input"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -1024,15 +1017,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7030,
+						"buffer_size": 37143,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4644,
-								4644
+								27305,
+								27305
 							]
 						],
 						"settings":
@@ -1042,39 +1035,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2405.0,
+						"translation.y": 15903.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/seph/Documents/Arduino/libraries/FastLED-master/FastLED.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 30700,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								410,
-								410
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1127,7 +1091,7 @@
 	"project": "Arduino.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 70.0
 	},
 	"save_all_on_build": true,
 	"select_file":
