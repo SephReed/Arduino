@@ -9,12 +9,15 @@ FASTLED_USING_NAMESPACE
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
-//#define MOUTH_DATA_PIN      9
-//#define SCLERA_DATA_PIN     8
+#define LED_TYPE            WS2811
+#define MOUTH_DATA_PIN      6
+#define MOUTH_COLOR_ORDER   RGB
+#define SCLERA_DATA_PIN     5
 #define PUPIL_DATA_PIN      3
+#define EYE_COLOR_ORDER     GRB
 #define BUTTON_PIN          4
-#define LED_TYPE    WS2811
-#define COLOR_ORDER GRB
+
+
 
 
 /*******************************
@@ -45,8 +48,10 @@ const int OBVIOUS_USER_MOVEMENT = 25;  //max jitter seen is 17
 *       LED ARRANGEMENT
 *******************************/
 #define NUM_MOUTH_LEDS 50
-#define NUM_SCLERA_LEDS 16
+CRGB MOUTH_LEDS_OUT[NUM_MOUTH_LEDS];
 
+#define NUM_SCLERA_LEDS 16
+CRGB SCLERA_LEDS_OUT[NUM_MOUTH_LEDS];
 
 #define NUM_SPOKES 16
 #define NUM_LAYERS 4
@@ -884,12 +889,18 @@ void markPaletteDirty() {
   mainTones[2] = HSV_to_RGB(mRootHue - mSecondTone, SATURATION_MAX, FULL_BYTE);
 
   CRGB mouthColor = mixColors(mainTones[0], mixColors(mainTones[1], mainTones[2], FULL_BYTE/2), FULL_BYTE/3);
+  for(uint8_t i = 0; i < NUM_MOUTH_LEDS; i++) {
+    MOUTH_LEDS_OUT[i] = mouthColor;
+  }
 
   const uint8_t dR = 3;  //desaturate ratio
   uint8_t red = (mouthColor.r/dR) + ((dR-1)*FULL_BYTE)/dR;
   uint8_t green = (mouthColor.g/dR) + ((dR-1)*FULL_BYTE)/dR;
   uint8_t blue = (mouthColor.b/dR) + ((dR-1)*FULL_BYTE)/dR;
   CRGB scleraColor = CRGB(red, green, blue);
+  for(uint8_t i = 0; i < NUM_SCLERA_LEDS; i++) {
+    SCLERA_LEDS_OUT[i] = scleraColor;
+  }
 
   for(uint8_t i = 0; i < PALETTE_SIZE; i++) {
     mainPaletteDirty[i] = true;
@@ -1073,9 +1084,9 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   
   // tell FastLED about the LED strip configuration
-  FastLED.addLeds<LED_TYPE,PUPIL_DATA_PIN,COLOR_ORDER>(PUPIL_LEDS_OUT, NUM_PUPIL_LEDS).setDither(true);
-//  FastLED.addLeds<LED_TYPE,SCLERA_DATA_PIN,COLOR_ORDER>(NULL, NUM_SCLERA_LEDS).setDither(true);
-  // FastLED.addLeds<LED_TYPE,MOUTH_DATA_PIN,COLOR_ORDER>(MOUTH_LEDS_OUT, NUM_MOUTH_LEDS).setDither(true);
+  FastLED.addLeds<LED_TYPE, PUPIL_DATA_PIN, EYE_COLOR_ORDER>(PUPIL_LEDS_OUT, NUM_PUPIL_LEDS).setDither(true);
+  FastLED.addLeds<LED_TYPE, SCLERA_DATA_PIN, EYE_COLOR_ORDER>(SCLERA_LEDS_OUT, NUM_SCLERA_LEDS).setDither(true);
+  FastLED.addLeds<LED_TYPE, MOUTH_DATA_PIN, MOUTH_COLOR_ORDER>(MOUTH_LEDS_OUT, NUM_MOUTH_LEDS).setDither(true);
   
 
   // set master brightness control
