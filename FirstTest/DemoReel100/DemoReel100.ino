@@ -9,13 +9,15 @@ FASTLED_USING_NAMESPACE
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
-#define LED_TYPE            WS2811
-#define MOUTH_DATA_PIN      6
-#define MOUTH_COLOR_ORDER   RGB
-#define SCLERA_DATA_PIN     5
-#define PUPIL_DATA_PIN      3
-#define EYE_COLOR_ORDER     GRB
-#define BUTTON_PIN          4
+#define LED_TYPE                        WS2811
+#define MOUTH_DATA_PIN                  6
+#define MOUTH_COLOR_ORDER               RGB
+#define SCLERA_DATA_PIN                 5
+#define PUPIL_DATA_PIN                  3
+#define EYE_COLOR_ORDER                 GRB
+#define NEW_PATTERN_BUTTON_PIN          4
+#define REVERSE_MODE_BUTTON_PIN         5
+#define FLIP_HUE_BUTTON_PIN             6
 
 
 
@@ -39,7 +41,7 @@ const int OBVIOUS_USER_MOVEMENT = 25;  //max jitter seen is 17
 #define BASELINE_BRIGHTNESS 90
 #define FRAMES_PER_SECOND  120
 #define PALETTE_STEP_EVERY_N_MS 200
-#define HOLD_PATTERN_FOR_AT_LEAST_N_FRAMES 600
+#define HOLD_PATTERN_FOR_AT_LEAST_N_FRAMES 300
 #define GAWKING_FRAMES_LIMIT 500
 
 
@@ -218,7 +220,7 @@ void randomConfetti(int runTime, CRGB* leds, bool reversed) {
   uint8_t chance = map(gModPin2, 0, 1023, 0, maxChance-minChance) + minChance;
   uint8_t colorSpread = map(gModPin1, 0, 1023, 0, PALETTE_SIZE/2);
 
-  if(reversed == true)
+  if(reversed == mReverseAnyPattern)
     fadeOutToDarkness(leds, NUM_PUPIL_LEDS, BASELINE_BRIGHTNESS, (chance/20));
 
   bool dudFound = false;
@@ -226,7 +228,7 @@ void randomConfetti(int runTime, CRGB* leds, bool reversed) {
     uint8_t randNum = random8(FULL_BYTE);
     if(randNum < chance) {
       CRGB color;
-      if(reversed == true || randNum < (4*chance)/5) {
+      if(reversed == mReverseAnyPattern || randNum < (4*chance)/5) {
         uint8_t colorOffset = random8(colorSpread);
         int colorNum = gMainPaletteOffset + colorOffset - (colorSpread/2);  
         color = getPaletteColorNum(colorNum);
@@ -290,7 +292,7 @@ void flappy(int runTime, CRGB* leds, bool reversed) {
 
   bool stepBirdsForward = (runTime >= flappyBirdsNextStepTime);
   if(stepBirdsForward) {
-    if(reversed == false)
+    if(reversed == mReverseAnyPattern)
       flappyBirdsRotation++;
     else
       flappyBirdsRotation--;
@@ -455,7 +457,7 @@ void gradientRotate(int runTime, CRGB* leds, bool reversed) {
   uint8_t currentPause = gradientStepMaxPause - map(gModPin2, 0, 1023, 0, gradientStepMaxPause - gradientStepMinPause);
   if(runTime - lastGradientStepTime >= currentPause) {
     lastGradientStepTime = runTime;
-    if(reversed == false)
+    if(reversed == mReverseAnyPattern)
       gradientRotateOffset++;
     else
       gradientRotateOffset--;
@@ -591,7 +593,7 @@ void sprinkler(int runTime, CRGB* leds, bool reversed) {
 
   if(runTime-sprinklerLastDropletTime > speed) {
     sprinklerLastDropletTime = runTime;  
-    if(reversed == false)
+    if(reversed == mReverseAnyPattern)
       dropletLayer[sprinklerCurrentSpoke] = 0;
     else
       dropletLayer[sprinklerCurrentSpoke] = NUM_LAYERS - 1;
@@ -617,7 +619,7 @@ void sprinkler(int runTime, CRGB* leds, bool reversed) {
       leds[targetIndex] = getPaletteColorNum(colorNum);
 
       if(moveDroplets) {
-        if(reversed == false) {
+        if(reversed == mReverseAnyPattern) {
           dropletLayer[s]++;
 
           if(dropletLayer[s] >= NUM_LAYERS) {
@@ -662,7 +664,7 @@ void orbits(int runTime, CRGB* leds, bool reversed) {
       orbitCometSpokes[c] = 0;
       orbitCometSpeeds[c] = random8(12)+3;
       orbitCometDirs[c] = random8(2) % 2 == 0;
-      if(reversed)
+      if(reversed == mReverseAnyPattern)
         orbitCometDirs[c] = !orbitCometDirs[c];
 
       orbitCometLayers[c] = c % NUM_LAYERS;
@@ -756,7 +758,7 @@ void warpSpeed(int runTime, CRGB* leds, bool reversed) {
       if(warpTimesNext[c] < runTime && warpTimesNext[c] != -1) {
         warpTimesNext[c] = -1;
 
-        if(reversed == false)
+        if(reversed == mReverseAnyPattern)
           warpCometLayers[c] = 0;
         else
           warpCometLayers[c] = NUM_LAYERS - 1;
@@ -776,7 +778,7 @@ void warpSpeed(int runTime, CRGB* leds, bool reversed) {
         leds[targetIndex] = getPaletteColorNum(colorNum);
 
         if(moveComets) {
-          if(reversed == false) {
+          if(reversed == mReverseAnyPattern) {
             warpCometLayers[c]++;
             if(warpCometLayers[c] >= NUM_LAYERS) {
               warpEraseComet(runTime, c);
@@ -930,14 +932,6 @@ CRGB getPaletteColorNum(uint8_t colorNum) {
       mainPalette[colorNum] = mainTones[0];
     }
 
-    // if(colorNum >= 56 && colorNum <= 64) {
-    //   // Serial.print("#");
-    //   // Serial.print(colorNum);
-    //   // Serial.print(", Mix ");
-    //   Serial.println(mixAmount);
-    // }
-
-    // mainPalette[colorNum] = CRGB(255, 0, mixAmount);
     mainPaletteDirty[colorNum] = false;
   }
   
@@ -983,8 +977,6 @@ CRGB HSV_to_RGB(uint8_t hue, uint8_t saturation, uint8_t value) {
     return CRGB(value, value, value);
   }
   
-  // double oneThird = fullByte/3;
-  // double twoThirds = oneThird * 2;
   const double oneThird = ONE_THIRD_BYTE;
   const double twoThirds = TWO_THIRDS_BYTE;
 
@@ -1081,7 +1073,7 @@ void setup() {
   markPaletteDirty();
 
   // button1.begin();
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(NEW_PATTERN_BUTTON_PIN, INPUT_PULLUP);
   
   // tell FastLED about the LED strip configuration
   FastLED.addLeds<LED_TYPE, PUPIL_DATA_PIN, EYE_COLOR_ORDER>(PUPIL_LEDS_OUT, NUM_PUPIL_LEDS).setDither(true);
@@ -1117,12 +1109,9 @@ bool nextPatternForced = false;
 
 void loop() {
   // Call the current pattern function once, updating the 'leds' array
-  // NUM_PATTERN_LAYERS
   for(uint8_t p = 0; p < NUM_PATTERN_LAYERS; p++) {
     uint8_t patternNum = mPatternLayerFnIndex[p];
     int runTime = mPatternLayerRunTimes[p];
-    // if(runTime != -1)
-    //   runTime += skippedFrames;
 
     CRGB* leds = & mPatternLayerLeds[p * NUM_PUPIL_LEDS];
     gPatterns[patternNum](runTime, leds, mPatternLayerReversed[p]);  
@@ -1139,7 +1128,6 @@ void loop() {
     }
   }
 
-  //TODO: loop to support more than 2 pattern layers
   else {
     double mixRatio = (double)mPatternTransitionTimePassed / (double)mPatternTransitionTimeTotal;
     uint8_t mix = mixRatio * (int)(FULL_BYTE);
@@ -1200,7 +1188,21 @@ void loop() {
 
 const uint8_t pinIds[] = {rootHueInPin, secondTonesInPin, modInPin1, modInPin2};
 const uint8_t NUM_POTS = ARRAY_SIZE(pinIds);
+int pinDriftSizes[NUM_POTS];
+uint8_t pinRerandomFramesLeft[NUM_POTS];
 int lastObviousTweakPoints [NUM_POTS];
+
+
+
+// const int MAX_DRIFT_SIZE = 40;
+// void randomizeDrift(uint8_t index) {
+//   pinDriftSizes[index] = random8(MAX_DRIFT_SIZE);
+//   pinRerandomFramesLeft[index] = random8(FULL_BYTE);
+// }
+
+// for (uint8_t i = 0; i < NUM_POTS; i++) {
+//   randomizeDrift(i);
+// }
 
 void watchPots() {
   //MOD PIN UPDATE
@@ -1258,59 +1260,125 @@ void watchPots() {
 
 
 
+const uint8_t buttonPins[] = {NEW_PATTERN_BUTTON_PIN, REVERSE_MODE_BUTTON_PIN, FLIP_HUE_BUTTON_PIN};
+const uint8_t NUM_BUTTONS = ARRAY_SIZE(buttonPins);
+bool buttonStates [NUM_BUTTONS];
+int8_t buttonHoldTimers [NUM_BUTTONS];
+int8_t buttonReleaseTimers [NUM_BUTTONS];
+for (uint8_t i = 0; i < NUM_BUTTONS; i++) {
+  buttonStates[i] = false;
+  buttonHoldTimers[i] = -1;
+  buttonReleaseTimers[i] = -1;
+}
 
-bool buttonState = false;
-int8_t buttonHoldTimer = -1;
-int8_t buttonReleaseTimer = -1;
-const uint8_t buttonDebounceTimeout = 15;
-const uint8_t buttonHoldMinTime = 35;
+bool mReverseAnyPattern = false;
+
+
+// bool buttonState = false;
+// int8_t buttonHoldTimer = -1;
+// int8_t buttonReleaseTimer = -1;
+// const uint8_t buttonDebounceTimeout = 15;
+// const uint8_t buttonHoldMinTime = 35;
 
 void watchButton() {
-  bool buttonPressed = (digitalRead(BUTTON_PIN) == LOW);
+  for (uint8_t i = 0; i < NUM_BUTTONS; i++) {
+    uint8_t buttonPin = buttonPins[i];
+    bool buttonPressed = (digitalRead(buttonPin) == LOW);
 
-  //if pressed now reset release timer
-  //check if the hold timer has not yet started, if it hasn't this is initial button pressing
-  //if it has started and it's over the min hold time, set held to true
-  if(buttonPressed) {
-    buttonReleaseTimer = 0;
-    mTimeWithoutPlay = 0;
+    //if pressed now reset release timer
+    //check if the hold timer has not yet started, if it hasn't this is initial button pressing
+    //if it has started and it's over the min hold time, set held to true
+    if(buttonPressed) {
+      buttonReleaseTimers[i] = 0;
+      mTimeWithoutPlay = 0;
 
-    //button press
-    if(buttonHoldTimer == -1) {
-      buttonState = buttonPressed;
-      Serial.print("button pressed");
-    }
-
-    //button held
-    else if(buttonHoldTimer > buttonHoldMinTime && mButtonHeld == false) {
-      mButtonHeld = true;
-      Serial.print("button held");
-    }
-  }
-
-
-  //button release (only after bounce)
-  else if(buttonHoldTimer > buttonDebounceTimeout) {
-    buttonReleaseTimer++;
-    mTimeWithoutPlay = 0;
-
-    if(buttonReleaseTimer > buttonDebounceTimeout) {
-      if(mButtonHeld == false) {
-        nextPatternForced = true;
-        nextPattern(80);
+      //button press
+      if(buttonHoldTimers[i] == -1) {
+        buttonStates[i] = buttonPressed;
+        // Serial.print("button pressed");
+        if (buttonPin == NEW_PATTERN_BUTTON_PIN) {
+          nextPatternForced = true;
+          nextPattern(80);
+        } else if (buttonPin == REVERSE_MODE_BUTTON_PIN) {
+          mReverseAnyPattern = true;
+          
+        } else if (buttonPin == FLIP_HUE_BUTTON_PIN) {
+          mRootHue += HALF_BYTE;
+        }
       }
+    }
 
-      buttonState = buttonPressed;
-      buttonHoldTimer = -1;
-      mButtonHeld = false;
+      //button release (only after bounce)
+    else if(buttonHoldTimers[i] > buttonDebounceTimeout) {
+      buttonReleaseTimers[i]++;
+      mTimeWithoutPlay = 0;
+
+      if(buttonReleaseTimers[i] > buttonDebounceTimeout) {
+        buttonStates[i] = buttonPressed;
+        buttonHoldTimers[i] = -1;
+
+        if (buttonPin == REVERSE_MODE_BUTTON_PIN) {
+          mReverseAnyPattern = false;
+          
+        } else if (buttonPin == FLIP_HUE_BUTTON_PIN) {
+          mRootHue += HALF_BYTE;
+        }
+      }
+    }
+
+
+    //increase button timer, as long as button is held
+    if(buttonState && buttonHoldTimer < buttonHoldMinTime + 1) {
+      buttonHoldTimer++;
     }
   }
 
 
-  //increase button timer, as long as button is held
-  if(buttonState && buttonHoldTimer < buttonHoldMinTime + 1) {
-    buttonHoldTimer++;
-  }
+  // bool buttonPressed = (digitalRead(NEW_PATTERN_BUTTON_PIN) == LOW);
+
+  // //if pressed now reset release timer
+  // //check if the hold timer has not yet started, if it hasn't this is initial button pressing
+  // //if it has started and it's over the min hold time, set held to true
+  // if(buttonPressed) {
+  //   buttonReleaseTimer = 0;
+  //   mTimeWithoutPlay = 0;
+
+  //   //button press
+  //   if(buttonHoldTimer == -1) {
+  //     buttonState = buttonPressed;
+  //     Serial.print("button pressed");
+  //   }
+
+  //   //button held
+  //   else if(buttonHoldTimer > buttonHoldMinTime && mButtonHeld == false) {
+  //     mButtonHeld = true;
+  //     Serial.print("button held");
+  //   }
+  // }
+
+
+  // //button release (only after bounce)
+  // else if(buttonHoldTimer > buttonDebounceTimeout) {
+  //   buttonReleaseTimer++;
+  //   mTimeWithoutPlay = 0;
+
+  //   if(buttonReleaseTimer > buttonDebounceTimeout) {
+  //     if(mButtonHeld == false) {
+  //       nextPatternForced = true;
+  //       nextPattern(80);
+  //     }
+
+  //     buttonState = buttonPressed;
+  //     buttonHoldTimer = -1;
+  //     mButtonHeld = false;
+  //   }
+  // }
+
+
+  // //increase button timer, as long as button is held
+  // if(buttonState && buttonHoldTimer < buttonHoldMinTime + 1) {
+  //   buttonHoldTimer++;
+  // }
 }
 
 
@@ -1353,13 +1421,6 @@ void nextPattern(int changeTime)
     mPatternTransitionTimePassed = ratio * mPatternTransitionTimePassed; 
     mPatternTransitionTimeTotal = changeTime;
   }
-
-  
-  
-  
-  
-  // add one to the current pattern number, and wrap around at the end
-  // gCurrentPatternNumber = (gCurrentPatternNumber + 1) % ARRAY_SIZE( gPatterns);
 }
 
 
