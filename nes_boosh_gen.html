@@ -1,0 +1,231 @@
+<html>
+<head>
+<script>
+const button = {
+	A: 1,
+	B: 2,
+	START: 3,
+	SELECT: 4,
+	RIGHT: 5,
+	DOWN: 6,
+	UP: 7,
+	LEFT: 8,
+};
+
+const boosh = {
+	left: 1,
+	right: 2,
+	big: 3,
+}
+
+const patterns = [
+	// A
+	{
+		desc: "normal boosh left",
+		buttons: [button.A],
+		pattern: [[boosh.left, 200, 0]]
+	},
+	{
+		desc: "big boosh left",
+		buttons: [button.A, button.UP],
+		pattern: [
+			[boosh.left, 600, 0],
+		]
+	},
+	{
+		desc: "tiny boosh left",
+		buttons: [button.A, button.DOWN],
+		pattern: [
+			[boosh.left, 100, 0],
+		]
+	},
+	{
+		desc: "normal boosh right, then big left",
+		buttons: [button.A, button.LEFT],
+		pattern: [
+			[boosh.right, 200, 200],
+			[boosh.left, 600, 0],
+		]
+	},
+	{
+		desc: "normal big left, then little right",
+		buttons: [button.A, button.RIGHT],
+		pattern: [
+			[boosh.left, 600, 400],
+			[boosh.right, 200, 0],
+		]
+	},
+
+	// B
+	{
+		desc: "normal boosh right",
+		buttons: [button.B],
+		pattern: [[boosh.right, 200, 0]]
+	},
+	{
+		desc: "big boosh right",
+		buttons: [button.B, button.UP],
+		pattern: [
+			[boosh.right, 600, 0],
+		]
+	},
+	{
+		desc: "tiny boosh right",
+		buttons: [button.B, button.DOWN],
+		pattern: [
+			[boosh.right, 100, 0],
+		]
+	},
+	{
+		desc: "normal boosh left, then big right",
+		buttons: [button.B, button.RIGHT],
+		pattern: [
+			[boosh.left, 200, 200],
+			[boosh.right, 600, 0],
+		]
+	},
+	{
+		desc: "big boosh right, then normal left",
+		buttons: [button.B, button.LEFT],
+		pattern: [
+			[boosh.right, 600, 400],
+			[boosh.left, 200, 0],
+		]
+	},
+
+	// AB
+	{
+		desc: "normal boosh left, right, left, right, left, right",
+		buttons: [button.A, button.B],
+		pattern: [
+			[boosh.left, 200, 200],
+			[boosh.right, 200, 200],
+			[boosh.left, 200, 200],
+			[boosh.right, 200, 200],
+			[boosh.left, 200, 200],
+			[boosh.right, 200, 200],
+		]
+	},
+
+	// Start
+	{
+		desc: "normal big boosh center",
+		buttons: [button.START],
+		pattern: [
+			[boosh.big, 200, 0],
+		]
+	},
+
+	{
+		desc: "extra big boosh center",
+		buttons: [button.START, button.UP],
+		pattern: [
+			[boosh.big, 600, 0],
+		]
+	},
+
+	{
+		desc: "short big boosh center",
+		buttons: [button.START, button.DOWN],
+		pattern: [
+			[boosh.big, 100, 0],
+		]
+	},
+
+	// SELECT
+	{
+		desc: "all booshs",
+		buttons: [button.SELECT],
+		pattern: [
+			[boosh.big, 200, 0],
+			[boosh.left, 200, 0],
+			[boosh.right, 200, 0],
+		]
+	},
+	{
+		desc: "all booshs long",
+		buttons: [button.SELECT, button.UP],
+		pattern: [
+			[boosh.big, 600, 0],
+			[boosh.left, 600, 0],
+			[boosh.right, 600, 0],
+		]
+	},
+
+	{
+		desc: "all booshs short",
+		buttons: [button.SELECT, button.DOWN],
+		pattern: [
+			[boosh.big, 100, 0],
+			[boosh.left, 100, 0],
+			[boosh.right, 100, 0],
+		]
+	},
+	{
+		desc: "all booshs left to right",
+		buttons: [button.SELECT, button.RIGHT],
+		pattern: [
+			[boosh.big, 200, 0],
+			[boosh.left, 200, 200],
+			[boosh.right, 200, 0],
+		]
+	},
+	{
+		desc: "all booshs right to left",
+		buttons: [button.SELECT, button.LEFT],
+		pattern: [
+			[boosh.big, 200, 0],
+			[boosh.right, 200, 200],
+			[boosh.left, 200, 0],
+		]
+	},
+
+
+	// START AND SELECT
+	{
+		desc: "all booshs for 1 sec",
+		buttons: [button.START, button.SELECT, button.UP],
+		pattern: [
+			[boosh.big, 1000, 0],
+			[boosh.left, 1000, 0],
+			[boosh.right, 1000, 0],
+		]
+	},
+].sort((a, b) => a.buttons.length < b.buttons.length);
+
+document.addEventListener("DOMContentLoaded", () => {
+	const pre = document.createElement("pre");
+	document.body.appendChild(pre);
+
+	let lines = [
+	`// SMALL_BOOSH_1  = 1`,
+	`// SMALL_BOOSH_2  = 2`,
+	`// BIG_BOOSH      = 3`,
+	`// pattern array goes { boosh num, ms hold open, ms till next, boosh num, ms hold open, ms till next, ...}`,
+	``,
+	`const uint8_t NUM_PATTERNS = ${patterns.length};`,
+	``,
+	`uint8_t* buttonCombos[NUM_PATTERNS];`,
+	`uint8_t  buttonComboLengths[NUM_PATTERNS];`,
+	`uint8_t* patterns[NUM_PATTERNS];`,
+	`uint8_t  patternLengths[NUM_PATTERNS];`,
+	``];
+
+	const buttonNames = ["A", "B", "Start", "Select", "Right", "Down", "Up", "Left"]
+
+	patterns.forEach((patt, index) => lines = lines.concat([
+		`// buttons: ${patt.buttons.map((butt) => buttonNames[butt - 1]).join(", ")}`,
+		`// desc: ${patt.desc}`,
+		`buttonCombos[${index}] = {${patt.buttons.join(", ")}};`,
+		`buttonComboLengths[${index}] = ${patt.buttons.length};`,
+		`patterns[${index}] = {${patt.pattern.map((boosh) => boosh.join(", ")).join(", ")}};`,
+		`patternLengths[${index}] = ${patt.pattern.length * 3};`,
+		``,
+		``,
+	]));
+
+	pre.innerText = lines.join("\n");
+})
+</script>
+</head>
+</html>
