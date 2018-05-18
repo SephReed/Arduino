@@ -10,14 +10,16 @@ FASTLED_USING_NAMESPACE
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
 #define LED_TYPE                        WS2811
-#define MOUTH_DATA_PIN                  6
+#define MOUTH_DATA_PIN                  11
 #define MOUTH_COLOR_ORDER               RGB
-#define SCLERA_DATA_PIN                 5
-#define PUPIL_DATA_PIN                  3
+#define SCLERA_DATA_PIN                 7
+#define SCLERA_DATA_PIN_2               8
+#define PUPIL_DATA_PIN                  9
+#define PUPIL_DATA_PIN_2                10
 #define EYE_COLOR_ORDER                 GRB
-#define NEW_PATTERN_BUTTON_PIN          4
-#define REVERSE_MODE_BUTTON_PIN         5
-#define FLIP_HUE_BUTTON_PIN             6
+#define NEW_PATTERN_BUTTON_PIN          3
+#define REVERSE_MODE_BUTTON_PIN         19
+#define FLIP_HUE_BUTTON_PIN             20
 
 
 
@@ -111,6 +113,7 @@ int gModPin2 = 0;
 *       INPUT BUTTONS
 *******************************/
 bool mButtonHeld = false;
+bool mReverseAnyPattern = false;
 
 
 
@@ -883,12 +886,13 @@ void fadeOutToDarkness(CRGB* leds, uint8_t ledCount, uint8_t minBrightness, uint
 
 CRGB mouthColor;
 CRGB scleraColor;
+uint8_t hueExtraOffset = 0;
 
 void markPaletteDirty() {
     //
-  mainTones[0] = HSV_to_RGB(mRootHue, SATURATION_MAX, FULL_BYTE);
-  mainTones[1] = HSV_to_RGB(mRootHue + mSecondTone, SATURATION_MAX, FULL_BYTE);
-  mainTones[2] = HSV_to_RGB(mRootHue - mSecondTone, SATURATION_MAX, FULL_BYTE);
+  mainTones[0] = HSV_to_RGB(mRootHue + hueExtraOffset, SATURATION_MAX, FULL_BYTE);
+  mainTones[1] = HSV_to_RGB(mRootHue + hueExtraOffset + mSecondTone, SATURATION_MAX, FULL_BYTE);
+  mainTones[2] = HSV_to_RGB(mRootHue + hueExtraOffset - mSecondTone, SATURATION_MAX, FULL_BYTE);
 
   CRGB mouthColor = mixColors(mainTones[0], mixColors(mainTones[1], mainTones[2], FULL_BYTE/2), FULL_BYTE/3);
   for(uint8_t i = 0; i < NUM_MOUTH_LEDS; i++) {
@@ -1074,10 +1078,14 @@ void setup() {
 
   // button1.begin();
   pinMode(NEW_PATTERN_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(REVERSE_MODE_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(FLIP_HUE_BUTTON_PIN, INPUT_PULLUP);
   
   // tell FastLED about the LED strip configuration
   FastLED.addLeds<LED_TYPE, PUPIL_DATA_PIN, EYE_COLOR_ORDER>(PUPIL_LEDS_OUT, NUM_PUPIL_LEDS).setDither(true);
+  FastLED.addLeds<LED_TYPE, PUPIL_DATA_PIN_2, EYE_COLOR_ORDER>(PUPIL_LEDS_OUT, NUM_PUPIL_LEDS).setDither(true);
   FastLED.addLeds<LED_TYPE, SCLERA_DATA_PIN, EYE_COLOR_ORDER>(SCLERA_LEDS_OUT, NUM_SCLERA_LEDS).setDither(true);
+  FastLED.addLeds<LED_TYPE, SCLERA_DATA_PIN_2, EYE_COLOR_ORDER>(SCLERA_LEDS_OUT, NUM_SCLERA_LEDS).setDither(true);
   FastLED.addLeds<LED_TYPE, MOUTH_DATA_PIN, MOUTH_COLOR_ORDER>(MOUTH_LEDS_OUT, NUM_MOUTH_LEDS).setDither(true);
   
 
@@ -1265,22 +1273,29 @@ const uint8_t NUM_BUTTONS = ARRAY_SIZE(buttonPins);
 bool buttonStates [NUM_BUTTONS];
 int8_t buttonHoldTimers [NUM_BUTTONS];
 int8_t buttonReleaseTimers [NUM_BUTTONS];
-for (uint8_t i = 0; i < NUM_BUTTONS; i++) {
-  buttonStates[i] = false;
-  buttonHoldTimers[i] = -1;
-  buttonReleaseTimers[i] = -1;
-}
 
-bool mReverseAnyPattern = false;
+
+
+
 
 
 // bool buttonState = false;
 // int8_t buttonHoldTimer = -1;
 // int8_t buttonReleaseTimer = -1;
-// const uint8_t buttonDebounceTimeout = 15;
-// const uint8_t buttonHoldMinTime = 35;
+ const uint8_t buttonDebounceTimeout = 1;
+ const uint8_t buttonHoldMinTime = 2;
+ bool buttonsHaveBeenInit = false;
 
 void watchButton() {
+  if (buttonsHaveBeenInit == false) {
+    for (uint8_t i = 0; i < NUM_BUTTONS; i++) {
+      buttonStates[i] = false;
+      buttonHoldTimers[i] = -1;
+      buttonReleaseTimers[i] = -1;
+    }
+    buttonsHaveBeenInit = true;
+  }
+  
   for (uint8_t i = 0; i < NUM_BUTTONS; i++) {
     uint8_t buttonPin = buttonPins[i];
     bool buttonPressed = (digitalRead(buttonPin) == LOW);
@@ -1298,12 +1313,15 @@ void watchButton() {
         // Serial.print("button pressed");
         if (buttonPin == NEW_PATTERN_BUTTON_PIN) {
           nextPatternForced = true;
+          Serial.println("PATTERN");
           nextPattern(80);
         } else if (buttonPin == REVERSE_MODE_BUTTON_PIN) {
           mReverseAnyPattern = true;
-          
+          Serial.println("REVERSE");
         } else if (buttonPin == FLIP_HUE_BUTTON_PIN) {
-          mRootHue += HALF_BYTE;
+          hueExtraOffset += HALF_BYTE;
+          Serial.println("COLOR");
+          markPaletteDirty();
         }
       }
     }
@@ -1321,15 +1339,16 @@ void watchButton() {
           mReverseAnyPattern = false;
           
         } else if (buttonPin == FLIP_HUE_BUTTON_PIN) {
-          mRootHue += HALF_BYTE;
+          hueExtraOffset += HALF_BYTE;
+          markPaletteDirty();
         }
       }
     }
 
 
     //increase button timer, as long as button is held
-    if(buttonState && buttonHoldTimer < buttonHoldMinTime + 1) {
-      buttonHoldTimer++;
+    if(buttonStates[i] && buttonHoldTimers[i] < buttonHoldMinTime + 1) {
+      buttonHoldTimers[i]++;
     }
   }
 
@@ -1502,5 +1521,3 @@ int8_t randomIndexNotFoundInCollection(uint8_t* collection, uint8_t collectionSi
 
   return -1;
 }
-
-
