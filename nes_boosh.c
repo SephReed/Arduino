@@ -9,9 +9,9 @@ const uint8_t BTN_DOWN = 6;
 const uint8_t BTN_UP = 7;
 const uint8_t BTN_LEFT = 8;
 
-const uint8_t BOOSH_LEFT = 1
-const uint8_t BOOSH_RIGHT = 2
-const uint8_t BOOSH_BIG = 3
+const uint8_t BOOSH_LEFT = 1;
+const uint8_t BOOSH_RIGHT = 2;
+const uint8_t BOOSH_BIG = 3;
 
 const int MS_SHORT = 100;
 const int MS_MED = 200;
